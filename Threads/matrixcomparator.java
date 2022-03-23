@@ -13,7 +13,7 @@ public class matrixcomparator extends Thread {
         this.matrix2=matrix2;
     }
     public static void main(String[] args) throws InterruptedException {
-        int[][] matrix1= {{1, 2, 3, 4},{0, 0,0, 1},{1, 2, 3, 4},{1, 2, 3, 4}};
+        int[][] matrix1= {{1, 2, 3, 4},{0, 0,0, 0},{1, 2, 3, 4},{1, 2, 3, 4}};
         int[][] matrix2= {{1, 2, 3, 4},{0, 0,0, 0},{1, 2, 3, 4},{1, 2, 3, 4}};
 //        System.out.println(matrix1.length);
 //        for (int i=1;i<2;i++){
@@ -21,7 +21,7 @@ public class matrixcomparator extends Thread {
 //                System.out.println(matrix[i][j]);
 //            }
             boolean ans=issame(matrix1.length,matrix1,matrix2);
-            System.out.println(ans);
+            System.out.println(flag);
 //        }
     }
 
@@ -42,7 +42,6 @@ public class matrixcomparator extends Thread {
     }
 
     public void run(){
-
         for (int i=row_start;i<row_end;i++){
             for (int j=0;j<column_len;j++){
                 if (matrix1[i][j]==matrix2[i][j]){
@@ -52,7 +51,7 @@ public class matrixcomparator extends Thread {
                 else if (matrix1[i][j]!=matrix2[i][j]){
                     System.out.println("not same");
                     flag=false;
-                    break;
+                    return;
                 }
             }
         }
