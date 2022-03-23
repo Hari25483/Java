@@ -28,6 +28,7 @@ public class isprime extends Thread{
      int len=matrix.length/1000;
      //2500/1000=2.5
      isprime[] threads=new isprime[len+1];
+
      int i=0;
      for (i=0;i<len;i++){
          threads[i]=new isprime(i*1000,(i*1000)+1000,matrix);
@@ -35,7 +36,7 @@ public class isprime extends Thread{
      }
      threads[i]=new isprime(i*1000,matrix.length,matrix);
      threads[i].start();
-     for (int j=0;j<len+1;j++){
+     for (int j=0;j<len+1;j++) {
          threads[j].join();
      }
      return count;
