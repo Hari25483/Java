@@ -6,28 +6,29 @@ public class Matrix extends Thread {
     private static int [][] c; 
 
 	/* You might need other variables as well */
-	private int row_id,column_index;
+	private int row_id, column_id;
     private int size;
 
 
-    public Matrix(int [][] a1, int  [][] b1) { // need to change this, might need some information 
-		a = a1;
+    public Matrix(int [][] a1, int  [][] b1) { // need to change this, might need some information
 		b = b1;
+		a = a1;
 	}
 
-	public Matrix ( int [][] final_matrix,int [][] matrix1, int  [][] matrix2,int rowIndex, int colIndex, int size_of_finalmatrix){
+	//Constructor of the Matrix class
+	public Matrix ( int [][] final_matrix,int [][] matrix1, int  [][] matrix2,int row_id, int column_id, int size_of_finalmatrix){
+		this.column_id = column_id;
+		this.row_id = row_id;
 		this.a= matrix1;
 		this.b= matrix2;
-		this.c= final_matrix;
-		this.row_id = rowIndex;
-		this.column_index= colIndex;
 		this.size = size_of_finalmatrix;
+		this.c= final_matrix;
 	}
 
 
 	public void run(){
         for(int i = 0; i< size; i++){
-			c[row_id][column_index]=c[row_id][column_index]+ a[row_id][i]*b[i][column_index];
+			c[row_id][column_id]=a[row_id][i]*b[i][column_id]+c[row_id][column_id];
         }           
     }
 
@@ -46,12 +47,14 @@ public class Matrix extends Thread {
 	int z1 = a[0].length; 
 	int z2 = b.length; 
 
+	//Check for the row and column size compatibility for matrix multiplication
 	if(z1 != z2) { 
 	    System.out.println("Cannnot multiply");
 	    return null;
 	}
 
-	int [][] c = new int [x][y]; 		//allocate required memory for c
+	//Declaring the resulting matrix
+	int [][] c = new int [x][y];
 
 	// Create 2D array of threads
 	Matrix[][] thread= new Matrix[x][y];
@@ -84,16 +87,17 @@ public class Matrix extends Thread {
 
 /*
 
-/// Answers For Questions
+//Questions and Answers
 
 
 1. How to use threads to parallelize the operation?
         Each element of the Matrix C will be operating in parallel operation.
         3 threads can be used in order to implement matrix multiplication in parallel.
 
-2. How may threads to use?
-		assign a 2d array to do store thread operations.
-		Each element of C array will be operated in each of Thread 2d array.
+2. How many threads to use?
+		Use a 2d array to do store and manipulate operations of threads.
+		Each element of final_matrix array will be calculated in each of thread 2d array.
+
 
 3. How to allocate work for each thread (recall it is the run function which all the threads
      execute)?
@@ -101,6 +105,9 @@ public class Matrix extends Thread {
      	For loop will allocate work for each thread.
 
 4. How to synchronize?
-    	By using thread.join(), synchronization happens. It waits for thread till finish the work.
+		Synchronization is not needed for this implementation because there wasn't any race conditiom where variables were written over
+		again by the threads in memory. The output matrix was created from all threads resulting each elements being ediited in the matrix.
+		Therefore, the block was not needed to be synchronized.
+
 
 */
