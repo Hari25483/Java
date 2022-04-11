@@ -28,6 +28,7 @@ public class matrixadder extends Thread {
 
 
     public static void adder(int row_len, int [][] matrix1, int [][] matrix2) throws InterruptedException{
+
         //28/4=7
         int count=row_len/4;
 
